@@ -1,5 +1,6 @@
 package br.com.zup.autor.controller
 
+import br.com.zup.apiExterna.EnderecoClient
 import br.com.zup.autor.model.Autor
 import br.com.zup.autor.repository.AutorRepository
 import br.com.zup.autor.view.CadastraAutorRequest
@@ -15,7 +16,11 @@ import javax.validation.Valid
 
 @Validated
 @Controller(value = "/autores")
-open class CadastraAutorController(val repository: AutorRepository) {
+open class CadastraAutorController(
+    val repository: AutorRepository,
+    val enderecoClient: EnderecoClient
+
+    ) {
 
     private val logger = LoggerFactory.getLogger(CadastraAutorController::class.java)
 
@@ -26,7 +31,13 @@ open class CadastraAutorController(val repository: AutorRepository) {
     open fun insert(@Body @Valid request: CadastraAutorRequest): HttpResponse<Any> {
         logger.info("........Iniciando cadastro do autor........")
 
-        val autor: Autor = request.toModel()
+        val enderecoResponse = enderecoClient.consulta(request.cep)
+
+
+
+        logger.info("....Consultando cep do autor na api externa.......")
+
+        val autor: Autor = request.toModel(enderecoResponse.body()!!)
         repository.save(autor)
 
         val uri = UriBuilder.of("/autores/{id}")

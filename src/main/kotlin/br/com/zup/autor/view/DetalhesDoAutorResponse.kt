@@ -12,6 +12,8 @@ class DetalhesDoAutorResponse(
     val nome: String = autor.nome
     val email: String = autor.email
     val descricao: String = autor.descricao
+    val localidade: String = autor.endereco.localidade
+
 
 }
 

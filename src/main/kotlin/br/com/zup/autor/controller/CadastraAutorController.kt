@@ -7,6 +7,7 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
+import io.micronaut.http.uri.UriBuilder
 import io.micronaut.validation.Validated
 import org.slf4j.LoggerFactory
 import javax.transaction.Transactional
@@ -28,8 +29,11 @@ open class CadastraAutorController(val repository: AutorRepository) {
         val autor: Autor = request.toModel()
         repository.save(autor)
 
+        val uri = UriBuilder.of("/autores/{id}")
+            .expand(mutableMapOf(Pair("id", autor.id)))
+
         logger.info(".........Autor cadastrado com sucesso!...............")
-        return HttpResponse.ok()
+        return HttpResponse.created(uri)
     }
 
 }

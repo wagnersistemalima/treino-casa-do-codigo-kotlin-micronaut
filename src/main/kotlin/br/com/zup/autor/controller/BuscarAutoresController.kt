@@ -9,17 +9,19 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.QueryValue
 import org.slf4j.LoggerFactory
 import java.util.*
+import javax.transaction.Transactional
 
 
 @Controller(value = "/autores")
-class BuscarAutoresController(val repository: AutorRepository) {
+open class BuscarAutoresController(val repository: AutorRepository) {
 
     private val logger = LoggerFactory.getLogger(BuscarAutoresController::class.java)
 
     // end point get / pesquisa /autores?email=carlos@gmail.com ou assim: /autores
 
+    @Transactional
     @Get
-    fun buscarTodos(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
+    open fun buscarTodos(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
         logger.info("............Iniciando a pesquisa de autores..............")
 
         if(email.isBlank()) {

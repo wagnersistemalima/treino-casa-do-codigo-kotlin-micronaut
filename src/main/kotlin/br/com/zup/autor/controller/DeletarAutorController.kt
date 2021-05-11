@@ -8,16 +8,18 @@ import io.micronaut.http.annotation.Delete
 import io.micronaut.http.annotation.PathVariable
 import org.slf4j.LoggerFactory
 import java.util.*
+import javax.transaction.Transactional
 
 @Controller(value = "/autores/{id}")
-class DeletarAutorController (val repository: AutorRepository){
+open class DeletarAutorController (val repository: AutorRepository){
 
     private val logger = LoggerFactory.getLogger(DeletarAutorController::class.java)
 
     // end point deletar autor pelo id
 
+    @Transactional
     @Delete
-    fun delete(@PathVariable id: Long): HttpResponse<Any> {
+    open fun delete(@PathVariable id: Long): HttpResponse<Any> {
         logger.info(".........Iniciando deletar um autor pelo id..........")
         val possivelAutor: Optional<Autor> = repository.findById(id)
 

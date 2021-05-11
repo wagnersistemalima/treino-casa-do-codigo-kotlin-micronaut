@@ -12,18 +12,20 @@ import io.micronaut.http.annotation.Put
 import io.micronaut.validation.Validated
 import org.slf4j.LoggerFactory
 import java.util.*
+import javax.transaction.Transactional
 import javax.validation.Valid
 
 @Validated
 @Controller(value = "/autores/{id}")
-class AtualizaAutorController(val repository: AutorRepository) {
+open class AtualizaAutorController(val repository: AutorRepository) {
 
     private val logger = LoggerFactory.getLogger(AtualizaAutorController::class.java)
 
     // end point atualizar dados autor
 
+    @Transactional
     @Put
-    fun update(@PathVariable id: Long, @Body @Valid request: AtualizaAutorRequest): HttpResponse<Any> {
+    open fun update(@PathVariable id: Long, @Body @Valid request: AtualizaAutorRequest): HttpResponse<Any> {
         logger.info(".........Iniciando atualização do autor..............")
         val possivelAutor: Optional<Autor> = repository.findById(id)
 

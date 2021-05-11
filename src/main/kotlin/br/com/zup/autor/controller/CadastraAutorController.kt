@@ -9,18 +9,20 @@ import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
 import io.micronaut.validation.Validated
 import org.slf4j.LoggerFactory
+import javax.transaction.Transactional
 import javax.validation.Valid
 
 @Validated
 @Controller(value = "/autores")
-class CadastraAutorController(val repository: AutorRepository) {
+open class CadastraAutorController(val repository: AutorRepository) {
 
     private val logger = LoggerFactory.getLogger(CadastraAutorController::class.java)
 
     // end point / insert autor
 
+    @Transactional
     @Post
-    fun insert(@Body @Valid request: CadastraAutorRequest): HttpResponse<Any> {
+    open fun insert(@Body @Valid request: CadastraAutorRequest): HttpResponse<Any> {
         logger.info("........Iniciando cadastro do autor........")
 
         val autor: Autor = request.toModel()

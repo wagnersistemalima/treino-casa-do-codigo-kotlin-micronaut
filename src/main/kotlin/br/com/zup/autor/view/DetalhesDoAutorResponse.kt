@@ -8,6 +8,7 @@ class DetalhesDoAutorResponse(
 
     ) {
 
+    val id: Long? = autor.id
     val nome: String = autor.nome
     val email: String = autor.email
     val descricao: String = autor.descricao

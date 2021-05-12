@@ -1,3 +1,4 @@
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.32"
     id("org.jetbrains.kotlin.kapt") version "1.4.32"
@@ -6,6 +7,13 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.32"
 }
+
+
+allOpen {
+    annotation("io.micronaut.http.annotation.Controller")
+
+}
+
 
 version = "0.1"
 group = "br.com.zup"

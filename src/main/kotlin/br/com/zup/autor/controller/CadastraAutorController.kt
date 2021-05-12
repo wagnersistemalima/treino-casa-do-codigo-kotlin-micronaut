@@ -16,7 +16,7 @@ import javax.validation.Valid
 
 @Validated
 @Controller(value = "/autores")
-open class CadastraAutorController(
+class CadastraAutorController(
     val repository: AutorRepository,
     val enderecoClient: EnderecoClient
 
@@ -28,7 +28,7 @@ open class CadastraAutorController(
 
     @Transactional
     @Post
-    open fun insert(@Body @Valid request: CadastraAutorRequest): HttpResponse<Any> {
+    fun insert(@Body @Valid request: CadastraAutorRequest): HttpResponse<Any> {
         logger.info("........Iniciando cadastro do autor........")
 
         val enderecoResponse = enderecoClient.consulta(request.cep)

@@ -13,7 +13,7 @@ import javax.transaction.Transactional
 
 
 @Controller(value = "/autores")
-open class BuscarAutoresController(val repository: AutorRepository) {
+class BuscarAutoresController(val repository: AutorRepository) {
 
     private val logger = LoggerFactory.getLogger(BuscarAutoresController::class.java)
 
@@ -21,7 +21,7 @@ open class BuscarAutoresController(val repository: AutorRepository) {
 
     @Transactional
     @Get
-    open fun buscarTodos(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
+    fun buscarTodos(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
         logger.info("............Iniciando a pesquisa de autores..............")
 
         if(email.isBlank()) {

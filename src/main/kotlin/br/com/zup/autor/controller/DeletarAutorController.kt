@@ -11,7 +11,7 @@ import java.util.*
 import javax.transaction.Transactional
 
 @Controller(value = "/autores/{id}")
-open class DeletarAutorController (val repository: AutorRepository){
+class DeletarAutorController (val repository: AutorRepository){
 
     private val logger = LoggerFactory.getLogger(DeletarAutorController::class.java)
 
@@ -19,7 +19,7 @@ open class DeletarAutorController (val repository: AutorRepository){
 
     @Transactional
     @Delete
-    open fun delete(@PathVariable id: Long): HttpResponse<Any> {
+    fun delete(@PathVariable id: Long): HttpResponse<Any> {
         logger.info(".........Iniciando deletar um autor pelo id..........")
         val possivelAutor: Optional<Autor> = repository.findById(id)
 

@@ -17,7 +17,7 @@ import javax.validation.Valid
 
 @Validated
 @Controller(value = "/autores/{id}")
-open class AtualizaAutorController(val repository: AutorRepository) {
+class AtualizaAutorController(val repository: AutorRepository) {
 
     private val logger = LoggerFactory.getLogger(AtualizaAutorController::class.java)
 
@@ -25,7 +25,7 @@ open class AtualizaAutorController(val repository: AutorRepository) {
 
     @Transactional
     @Put
-    open fun update(@PathVariable id: Long, @Body @Valid request: AtualizaAutorRequest): HttpResponse<Any> {
+    fun update(@PathVariable id: Long, @Body @Valid request: AtualizaAutorRequest): HttpResponse<Any> {
         logger.info(".........Iniciando atualização do autor..............")
         val possivelAutor: Optional<Autor> = repository.findById(id)
 

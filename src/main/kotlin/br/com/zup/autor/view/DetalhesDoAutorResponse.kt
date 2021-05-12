@@ -4,16 +4,17 @@ import br.com.zup.autor.model.Autor
 
 
 class DetalhesDoAutorResponse(
-    autor: Autor
+    val id: Long?,
+    val nome: String,
+    val email: String,
+    val descricao: String,
+    val localidade: String
 
     ) {
 
-    val id: Long? = autor.id
-    val nome: String = autor.nome
-    val email: String = autor.email
-    val descricao: String = autor.descricao
-    val localidade: String = autor.endereco.localidade
+    // construtor segundario
 
+    constructor(autor: Autor) : this(autor.id ,autor.nome, autor.email, autor.descricao, autor.endereco.localidade)
 
 }
 

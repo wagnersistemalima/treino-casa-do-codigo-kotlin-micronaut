@@ -40,7 +40,7 @@ class BuscarAutoresController(val repository: AutorRepository) {
 
         val autor = possivelAutor.get()
         logger.info("..........Retornando o autor pelo email.............")
-        return HttpResponse.ok(DetalhesDoAutorResponse(possivelAutor.get()))
+        return HttpResponse.ok(DetalhesDoAutorResponse(autor))
     }
 
 

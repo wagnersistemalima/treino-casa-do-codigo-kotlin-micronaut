@@ -33,8 +33,6 @@ open class CadastraAutorController(
 
         val enderecoResponse = enderecoClient.consulta(request.cep)
 
-
-
         logger.info("....Consultando cep do autor na api externa.......")
 
         val autor: Autor = request.toModel(enderecoResponse.body()!!)

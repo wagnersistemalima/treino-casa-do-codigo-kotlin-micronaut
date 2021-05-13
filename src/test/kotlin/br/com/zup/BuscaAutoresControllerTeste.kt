@@ -70,7 +70,7 @@ class BuscaAutoresControllerTeste {
 
     @AfterEach
     fun tearDown() {
-        repository.delete(autor)
+        repository.deleteAll()
     }
 
     // 1 cenario de teste

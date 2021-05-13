@@ -1,10 +1,12 @@
 package br.com.zup
 
+import br.com.zup.autor.controller.BuscarAutoresController
 import br.com.zup.autor.model.Autor
 import br.com.zup.autor.model.Endereco
 import br.com.zup.autor.repository.AutorRepository
 import br.com.zup.autor.view.DetalhesDoAutorResponse
 import br.com.zup.autor.view.EnderecoResponse
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
@@ -13,11 +15,17 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import javax.inject.Inject
 
 @MicronautTest
 class BuscaAutoresControllerTeste {
+
+    // injetar o controller
+
+    @field:Inject
+    lateinit var buscaAutoresController: BuscarAutoresController
 
     // injetar um repository do autor
 
@@ -35,7 +43,7 @@ class BuscaAutoresControllerTeste {
     // rodar antes de cada teste
 
     @BeforeEach
-    internal fun setUp() {
+    fun setUp() {
 
         val enderecoResponse: EnderecoResponse = EnderecoResponse(
             logradouro = "Tenente Adelino Barbosa de Melo",
@@ -61,14 +69,15 @@ class BuscaAutoresControllerTeste {
     // rodar depois dos testes
 
     @AfterEach
-    internal fun tearDown() {
+    fun tearDown() {
         repository.delete(autor)
     }
 
     // 1 cenario de teste
 
+    @DisplayName("Deve retornar os detalhes do autor")
     @Test
-    internal fun deveRetornarOsDetalherDeUmAutor() {
+    fun deveRetornarOsDetalherDeUmAutor() {
         // logica aqui
 
         val response = client.toBlocking().exchange(
@@ -86,5 +95,56 @@ class BuscaAutoresControllerTeste {
 
     }
 
+    // 2º cenario de teste
 
+    @Test
+    @DisplayName("Deve retornar not found quando o email a ser buscado não existe")
+    fun deveRetornarNotFound() {
+
+        // cenario
+
+        var resposta: HttpResponse<Any> = buscaAutoresController.buscar(email = "nada@gmail.com")
+
+        // ação
+
+        // assertivas
+
+        assertEquals(HttpStatus.NOT_FOUND, resposta.status)
+
+    }
+
+    // 3º cenario de teste
+
+    @Test
+    @DisplayName("Deve retornar 200 guando a pesquisa estiver ok")
+    fun deveveRetornarOk() {
+
+        // cenario
+
+        var resposta: HttpResponse<Any> = buscaAutoresController.buscar("test@gmail.com")
+
+        // açao
+
+        // assertivas
+
+        assertEquals(HttpStatus.OK, resposta.status)
+
+    }
+
+    // 4º cenario de teste
+
+    @Test
+    @DisplayName("Deve retornar 200 ok quando nao o email estiver vazio")
+    fun deveRetornarOkQuandoEmailEstiverVazio() {
+
+        // cenario
+
+        val resposta: HttpResponse<Any> = buscaAutoresController.buscar("")
+
+        // ação
+
+        // assertivas
+        assertEquals(HttpStatus.OK, resposta.status)
+
+    }
 }

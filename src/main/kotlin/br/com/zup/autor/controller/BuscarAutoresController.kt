@@ -21,7 +21,7 @@ class BuscarAutoresController(val repository: AutorRepository) {
 
     @Transactional
     @Get
-    fun buscarTodos(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
+    fun buscar(@QueryValue(defaultValue = "") email: String ): HttpResponse<Any> {
         logger.info("............Iniciando a pesquisa de autores..............")
 
         if(email.isBlank()) {
